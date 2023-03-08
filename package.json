@@ -1,0 +1,35 @@
+{
+  "name": "military-forecast-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc --build",
+    "type-check": "tsc --noEmit",
+    "lint": "eslint ./**/*.ts",
+    "predeploy": "npm run lint && npm run build",
+    "deploy": "serverless deploy"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maksymura/military-forecast-api.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/maksymura/military-forecast-api/issues"
+  },
+  "homepage": "https://github.com/maksymura/military-forecast-api#readme",
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.111",
+    "@types/node": "^18.14.5",
+    "@typescript-eslint/eslint-plugin": "^5.54.0",
+    "@typescript-eslint/parser": "^5.54.0",
+    "eslint": "^8.35.0",
+    "prettier": "2.8.4"
+  },
+  "dependencies": {
+    "aws-lambda": "^1.0.7",
+    "aws-sdk": "^2.1330.0"
+  }
+}
