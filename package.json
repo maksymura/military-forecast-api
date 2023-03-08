@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "tsc --build",
+    "build": "tsc --build --clean",
     "type-check": "tsc --noEmit",
     "lint": "eslint ./**/*.ts",
     "predeploy": "npm run lint && npm run build",
@@ -26,6 +26,7 @@
     "@typescript-eslint/eslint-plugin": "^5.54.0",
     "@typescript-eslint/parser": "^5.54.0",
     "eslint": "^8.35.0",
+    "husky": "^8.0.3",
     "prettier": "2.8.4"
   },
   "dependencies": {
