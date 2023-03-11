@@ -3,7 +3,7 @@
 Requirements:
 1. Install Node v18+
 2. Install aws-cli https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html
-3. Login to aws-cli (With provided credentials)
+3. Login to aws-cli (With key and secret): `aws configure`
 
 How to deploy functions locally:
 1. Run cmd: `npm run deploy`
