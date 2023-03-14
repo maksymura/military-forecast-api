@@ -28,7 +28,11 @@ functions:
     timeout: 15
     memorySize: 128
     events:
-      - schedule: rate(24 hours)
+      - schedule:
+          rate: (0 0 * * *)
+          timezone: Europe/Kiev
       - http:
           path: /parseWeather
           method: post
+plugins:
+  - serverless-local-schedule

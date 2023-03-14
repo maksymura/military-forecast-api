@@ -1,7 +1,7 @@
-import { parseWeatherInKyivTomorrow } from "../functions/parse-weather/case";
+import { parseWeatherInUkraineTomorrow } from "../functions/parse-weather/case";
 
 export async function parseWeather() {
-  await parseWeatherInKyivTomorrow();
+  await parseWeatherInUkraineTomorrow();
 }
 
 parseWeather().catch((err) => console.log(err));

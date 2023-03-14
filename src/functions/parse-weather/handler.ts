@@ -1,11 +1,11 @@
 import { Context, APIGatewayEvent, APIGatewayProxyResult } from "aws-lambda";
-import { parseWeatherInKyivTomorrow } from "./case";
+import { parseWeatherInUkraineTomorrow } from "./case";
 
 export const handler = async (
   event: APIGatewayEvent,
   context: Context
 ): Promise<APIGatewayProxyResult> => {
-  await parseWeatherInKyivTomorrow();
+  await parseWeatherInUkraineTomorrow();
 
   return {
     statusCode: 200,

@@ -1,11 +1,19 @@
+import { regions, weatherAPIUrl } from "./constants";
 import { WeatherApiResponse } from "./types";
 
-const weatherAPIUrl =
-  "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services";
+export async function getWeatherInUkrainianRegionsTomorrow(): Promise<
+  WeatherApiResponse[]
+> {
+  return (await Promise.all(
+    regions.map(async (region) => getWeatherInRegionTomorrow(region))
+  )) as WeatherApiResponse[];
+}
 
-export async function getWeatherInKyivTomorrow() {
+async function getWeatherInRegionTomorrow(
+  region: string
+): Promise<WeatherApiResponse> {
   const res = await fetch(
-    `${weatherAPIUrl}/timeline/Kyiv/tomorrow?unitGroup=metric&key=${process.env.WEATHER_API_TOKEN}&contentType=json`
+    `${weatherAPIUrl}/timeline/${region}/tomorrow?unitGroup=metric&key=${process.env.WEATHER_API_TOKEN}&contentType=json`
   );
   const data = await res.json();
 
