@@ -7,6 +7,7 @@
     "build": "tsc --build --clean",
     "type-check": "tsc --noEmit",
     "lint": "eslint ./**/*.ts",
+    "lint:fix": "eslint ./**/*.ts --fix",
     "predeploy": "npm run lint && npm run build",
     "deploy": "serverless deploy",
     "prepare": "husky install"
@@ -28,6 +29,8 @@
   },
   "dependencies": {
     "aws-lambda": "^1.0.7",
-    "aws-sdk": "^2.1330.0"
+    "aws-sdk": "^2.1330.0",
+    "natural": "^6.2.0",
+    "node-html-parser": "^6.1.5"
   }
 }
