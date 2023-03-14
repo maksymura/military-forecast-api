@@ -4,6 +4,6 @@ export type ParsePageResult = {
 };
 
 export type ParsedPost = {
-  date: string,
-  words: string[]
-}
+  date: string;
+  words: string[];
+};

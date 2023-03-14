@@ -6,7 +6,6 @@ import { join } from "path";
 import { PorterStemmer } from "natural";
 import { baseUrl, DOCS_PATH, publicationsUrl } from "./constants";
 
-
 const wordRegex = /^\w+$/;
 
 export async function parseISW(from: Date, to: Date) {
@@ -136,12 +135,12 @@ function retrievePostBody(postPage: HTMLElement): HTMLElement {
 }
 
 function parseTextBlock(text: string): string[] {
-  return text  // text block from HTML tag
+  return text // text block from HTML tag
     .trim()
     .toLocaleLowerCase()
     .split(/\s+/) // tokenize
-    .filter((w) => w.length > 2 && w.length < 50 && wordRegex.test(w))  // pick relevant words
-    .map((w) => PorterStemmer.stem(w));  // stem
+    .filter((w) => w.length > 2 && w.length < 50 && wordRegex.test(w)) // pick relevant words
+    .map((w) => PorterStemmer.stem(w)); // stem
 }
 
 function collectWords(root: HTMLElement, words: string[] = []): string[] {
@@ -165,17 +164,16 @@ class DocumentAccumulator {
   readonly docsByDates: Map<string, string[]>;
 
   constructor() {
-      this.docsByDates = new Map();
+    this.docsByDates = new Map();
   }
 
   add(key: string, words: string[]) {
-      const val = this.docsByDates.get(key);
+    const val = this.docsByDates.get(key);
 
-      if(val) {
-          val.push(...words);
-      }else {
-          this.docsByDates.set(key, words);
-      }
+    if (val) {
+      val.push(...words);
+    } else {
+      this.docsByDates.set(key, words);
+    }
   }
 }
-

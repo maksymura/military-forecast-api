@@ -37,14 +37,19 @@ export function calcTfIdf(docsPath: string, fromDate: Date, toDate: Date) {
   }
 
   for (let i = 0; i < docsCount; ++i) {
-    const formatted = tfIdf.listTerms(i).reduce<Record<string, Omit<TfIdfTerm, 'term'>>>((acc, {term, ...data}) => {
-        acc[term] = data;
-        return acc;
-    }, {})
+    const formatted = tfIdf
+      .listTerms(i)
+      .reduce<Record<string, Omit<TfIdfTerm, "term">>>(
+        (acc, { term, ...data }) => {
+          acc[term] = data;
+          return acc;
+        },
+        {}
+      );
 
     fs.writeFileSync(
       join(RESULTS_PATH, `${datesByIndex[i]}.json`),
-      JSON.stringify({ date: datesByIndex[i], tfIdf: formatted}, null, 2)
+      JSON.stringify({ date: datesByIndex[i], tfIdf: formatted }, null, 2)
     );
   }
 }
