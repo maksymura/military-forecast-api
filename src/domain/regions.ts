@@ -1,0 +1,30 @@
+export type Region = (typeof regions)[number];
+
+// Simferopol and Luhansk are missing from regions.csv, so they are not included in calculations
+export const regions = [
+  // "Simferopol",
+  "Vinnytsia",
+  "Lutsk",
+  "Dnipro",
+  "Donetsk",
+  "Zhytomyr",
+  "Zaporozhye",
+  "Ivano-Frankivsk",
+  "Kyiv",
+  "Kropyvnytskyi",
+  // "Luhansk",
+  "Lviv",
+  "Mykolaiv",
+  "Odesa",
+  "Poltava",
+  "Rivne",
+  "Sumy",
+  "Ternopil",
+  "Kharkiv",
+  "Kherson",
+  "Khmelnytskyi",
+  "Cherkasy",
+  "Chernivtsi",
+  "Chernihiv",
+  "Uzhgorod",
+] as const;
