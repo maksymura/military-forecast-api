@@ -11,3 +11,13 @@ export async function putJSONObject(fileKey: string, data: string) {
     })
     .promise();
 }
+
+export async function getObjectStream(fileKey: string) {
+  const s3 = new AWS.S3();
+  return s3
+    .getObject({
+      Bucket: process.env.BUCKET as string,
+      Key: fileKey,
+    })
+    .createReadStream();
+}

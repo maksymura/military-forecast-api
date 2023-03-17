@@ -1,15 +1,14 @@
 import { parse } from "csv-parse";
-import * as fs from "fs";
-import * as path from "path";
 import { WeatherDay } from "../domain/weather";
-import { putJSONObject } from "../external-api/s3/api";
+import { getObjectStream, putJSONObject } from "../external-api/s3/api";
 
 export async function parseWeather() {
   const weatherDaysMap: Record<string, WeatherDay[]> = {};
 
-  const filePath = "../static/all_weather_by_hour.csv";
+  const fileKey = "static/all_weather_by_hour.csv";
+  const stream = await getObjectStream(fileKey);
 
-  fs.createReadStream(path.resolve(filePath))
+  stream
     .pipe(parse({ delimiter: ",", from_line: 2 }))
     .on("data", function (row) {
       const [
@@ -35,6 +34,8 @@ export async function parseWeather() {
         datetimeEpoch,
         temp,
       };
+
+      console.log(weatherDay);
 
       if (!weatherDaysMap[datetime]) {
         weatherDaysMap[datetime] = [];
