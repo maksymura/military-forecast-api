@@ -28,19 +28,18 @@ export async function parseWeather() {
       const weatherDay: WeatherDay = {
         latitude,
         longitude,
-        address,
+        address: address.split(",")[0],
         timezone,
         datetime,
         datetimeEpoch,
         temp,
       };
 
-      console.log(weatherDay);
-
       if (!weatherDaysMap[datetime]) {
         weatherDaysMap[datetime] = [];
       }
 
+      // there is duplicate data in csv file
       const dayInDate = weatherDaysMap[datetime].find(
         (weatherDay) => weatherDay.address === address
       );
