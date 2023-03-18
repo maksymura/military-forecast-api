@@ -1,6 +1,11 @@
 import { parse } from "csv-parse";
 import { Alarm } from "../domain/alarm";
+import { RegionEnum } from "../domain/regions";
 import { getObjectStream, putJSONObject } from "../external-api/s3/api";
+
+function convertToRegion(region_id: string): string {
+    return RegionEnum[region_id as keyof typeof RegionEnum];
+}
 
 export async function parseAlarms() {
   const alarmsMap: Record<string, Alarm[]> = {};
@@ -26,9 +31,7 @@ export async function parseAlarms() {
 
       const alarm: Alarm = {
           id: Number.parseInt(id),
-          region_id: Number.parseInt(region_id),
-          region_title,
-          region_city,
+          address: convertToRegion(region_id),
           all_region: (all_region !== '0'),
           start: start,
           end: end,
