@@ -34,7 +34,7 @@ function createWeatherAPIDay({
   return {
     latitude,
     longitude,
-    address: address.split(",")[0] as Region,
+    address: address as Region,
     timezone,
     temp,
     datetime,
