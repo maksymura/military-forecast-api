@@ -11,3 +11,5 @@ How to deploy functions locally:
 How to run scripts locally (e.g. src/scripts/parse-weather.ts):
 1. Install ts-node `npm i ts-node -g`
 2. Run cmd: `BUCKET=military-forecast ts-node src/parse-weather.ts`
+
+Weather API limitation: 1000 records/day - free tier

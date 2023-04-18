@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "tsc --build --clean",
+    "build": "rimraf dist && tsc",
     "type-check": "tsc --noEmit",
     "lint": "eslint ./**/*.ts",
     "lint:fix": "eslint ./**/*.ts --fix",
@@ -26,6 +26,7 @@
     "eslint": "^8.35.0",
     "husky": "^8.0.0",
     "prettier": "2.8.4",
+    "rimraf": "^5.0.0",
     "serverless-local-schedule": "^0.1.7"
   },
   "dependencies": {

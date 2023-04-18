@@ -1,8 +1,10 @@
 export type WeatherAPIResponse = {
   latitude: number; // 50.4506
   longitude: number; // 30.5243
+  resolvedAddress: string;
   address: string; // "Kyiv"
   timezone: string; // "Europe/Kiev"
+  tzoffset: number;
   days: [
     {
       datetime: string; // "2023-03-09";
