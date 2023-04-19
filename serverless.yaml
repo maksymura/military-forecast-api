@@ -32,3 +32,10 @@ functions:
       - http:
           path: /parseWeather
           method: post
+  parseIsw:
+    handler: dist/functions/isw/handler.handler
+    timeout: 900
+    memorySize: 256
+    events:
+      - schedule: rate(24 hours)
+
