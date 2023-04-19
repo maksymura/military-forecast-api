@@ -24,7 +24,7 @@ provider:
 
 functions:
   parseWeather:
-    handler: dist/src/functions/parse-weather/handler.handler
+    handler: dist/functions/parse-weather/handler.handler
     timeout: 15
     memorySize: 128
     events:
