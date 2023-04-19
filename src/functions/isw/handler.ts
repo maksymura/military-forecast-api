@@ -1,7 +1,6 @@
 import { Context, APIGatewayEvent, APIGatewayProxyResult } from "aws-lambda";
 import { processTfIdf } from "./process-isw";
 import { saveIswArticles } from "./parse-isw";
-import { getObjectStream } from "../../external-api/s3/api";
 
 export const handler = async (
   event: APIGatewayEvent,

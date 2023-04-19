@@ -1,6 +1,6 @@
 import parse, { HTMLElement } from "node-html-parser";
 
-function normalizeDate(date: Date): Date {
+export function normalizeDate(date: Date): Date {
   return new Date(date.getFullYear(), date.getMonth(), date.getDate());
 }
 
