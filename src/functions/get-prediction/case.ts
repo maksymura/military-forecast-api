@@ -18,7 +18,7 @@ async function getModelInfo() {
 }
 
 async function getPrediction() {
-  const predictionFileKey = "predictions/current.json";
+  const predictionFileKey = "predictions/prediction.json";
   const predictionObject = await getObject(predictionFileKey);
   const prediction = JSON.parse(predictionObject.Body!.toString());
 
