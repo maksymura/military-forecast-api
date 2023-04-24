@@ -31,3 +31,13 @@ export async function getObject(fileKey: string) {
     })
     .promise();
 }
+
+export async function listObjects(prefix: string) {
+  const s3 = new AWS.S3();
+  return s3
+    .listObjectsV2({
+      Bucket: process.env.BUCKET as string,
+      Prefix: prefix,
+    })
+    .promise();
+}

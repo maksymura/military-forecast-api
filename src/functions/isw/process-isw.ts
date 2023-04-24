@@ -1,39 +1,37 @@
 import { TfIdf, TfIdfTerm } from "natural";
-import * as fs from "fs";
-import { join } from "path";
-import { dateAfter, dateBefore } from "./util";
-import { RESULTS_PATH } from "./constants";
+import {
+  getObject,
+  listObjects,
+  putJSONObject,
+} from "../../external-api/s3/api";
 
-export function calcTfIdf(docsPath: string, fromDate: Date, toDate: Date) {
+export async function processTfIdf() {
+  const docsPrefix = "isw/docs";
+  const stream = await listObjects(docsPrefix);
+
+  if (!stream.Contents) {
+    return;
+  }
+
   const tfIdf = new TfIdf();
-
-  const files = fs.readdirSync(docsPath);
 
   let docsCount = 0;
   const datesByIndex: string[] = [];
 
-  for (const fileName of files) {
-    const dateStr = fileName.substring(0, fileName.indexOf("."));
-    const date = new Date(dateStr);
+  for (const obj of stream.Contents) {
+    const key = obj.Key as string;
 
-    if (dateBefore(date, fromDate) || dateAfter(date, toDate)) {
-      continue;
-    }
+    console.log(key);
+    const file = JSON.parse((await getObject(key)).Body?.toString() as string);
 
-    console.log("Reading document", fileName);
+    const dateStr: string = file.date;
+    console.log("Retrieved file with date:", dateStr);
 
-    const doc = JSON.parse(
-      fs.readFileSync(join(docsPath, fileName)).toString()
-    ).words;
-
+    const doc: string[] = file.words;
     tfIdf.addDocument(doc);
 
     ++docsCount;
     datesByIndex.push(dateStr);
-  }
-
-  if (!fs.existsSync(RESULTS_PATH)) {
-    fs.mkdirSync(RESULTS_PATH);
   }
 
   for (let i = 0; i < docsCount; ++i) {
@@ -46,10 +44,10 @@ export function calcTfIdf(docsPath: string, fromDate: Date, toDate: Date) {
         },
         {}
       );
-
-    fs.writeFileSync(
-      join(RESULTS_PATH, `${datesByIndex[i]}.json`),
-      JSON.stringify({ date: datesByIndex[i], tfIdf: formatted }, null, 2)
+    const key = `isw/tfidf/${datesByIndex[i]}.json`;
+    await putJSONObject(
+      key,
+      JSON.stringify({ date: datesByIndex[i], tfIdf: formatted })
     );
   }
 }

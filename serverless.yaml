@@ -9,6 +9,7 @@ provider:
   environment:
     BUCKET: ${ssm:main-bucket}
     WEATHER_API_TOKEN: ${ssm:weather-api-token}
+    ALARM_API_TOKEN: ${ssm:alarm-api-token}
   iam:
     role:
       statements:
@@ -23,6 +24,15 @@ provider:
             - arn:aws:s3:::${ssm:main-bucket}/*
 
 functions:
+  getPrediction:
+    handler: dist/functions/get-prediction/handler.handler
+    timeout: 10
+    memorySize: 128
+    events:
+      - http:
+          path: /getPrediction
+          method: get
+
   parseWeather:
     handler: dist/functions/parse-weather/handler.handler
     timeout: 15
@@ -31,4 +41,21 @@ functions:
       - schedule: rate(24 hours)
       - http:
           path: /parseWeather
+          method: post
+
+  parseIsw:
+    handler: dist/functions/isw/handler.handler
+    timeout: 900
+    memorySize: 256
+    events:
+      - schedule: rate(24 hours)
+
+  parseAlarms:
+    handler: dist/functions/alarms/handler.handler
+    timeout: 30
+    memorySize: 128
+    events:
+      - schedule: rate(24 hours)
+      - http:
+          path: /alarms
           method: post
