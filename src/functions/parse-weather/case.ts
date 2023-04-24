@@ -8,9 +8,10 @@ export async function parseWeatherInUkraineTomorrow() {
   const tomorrow = new Date();
   tomorrow.setTime(tomorrow.getTime() + 24 * 60 * 60 * 1000);
 
-  const fileKey = `${weatherBucket}/${tomorrow.getFullYear()}-${
-    tomorrow.getMonth() + 1
-  }-${tomorrow.getDate()}.json`;
+  const year = tomorrow.getFullYear(); // get the year
+  const month = (tomorrow.getMonth() + 1).toString().padStart(2, "0");
+  const day = tomorrow.getDate().toString().padStart(2, "0");
+  const fileKey = `${weatherBucket}/${year}-${month}-${day}.json`;
 
   return putJSONObject(fileKey, JSON.stringify(weatherTomorrow));
 }
