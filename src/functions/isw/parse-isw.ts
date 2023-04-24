@@ -1,14 +1,13 @@
 import { HTMLElement } from "node-html-parser";
 import { ParsedPost, ParsePageResult } from "./types";
 import { dateAfter, dateBefore, stringifyDate, fetchPageHtml } from "./util";
-import * as fs from "fs";
-import { join } from "path";
 import { PorterStemmer } from "natural";
-import { baseUrl, DOCS_PATH, publicationsUrl } from "./constants";
+import { baseUrl, publicationsUrl } from "./constants";
+import { putJSONObject } from "../../external-api/s3/api";
 
 const wordRegex = /^\w+$/;
 
-export async function parseISW(from: Date, to: Date) {
+export async function saveIswArticles(from: Date, to: Date): Promise<number> {
   let shouldContinue = true;
   let page = 0;
 
@@ -30,29 +29,14 @@ export async function parseISW(from: Date, to: Date) {
     ++page;
   } while (shouldContinue);
 
-  const outPath = DOCS_PATH;
-
-  console.log("Outdir", outPath);
-
-  if (!fs.existsSync(outPath)) {
-    fs.mkdirSync(outPath);
-  }
-
   for (const [date, words] of acc.docsByDates.entries()) {
-    const fileName = `${date}.json`;
+    const fileName = `isw/docs/${date}.json`;
 
-    fs.writeFileSync(
-      join(outPath, fileName),
-      JSON.stringify(
-        {
-          date,
-          words,
-        },
-        null,
-        2
-      )
-    );
+    await putJSONObject(fileName, JSON.stringify({ date, words }));
+    console.log('Saved', fileName);
   }
+
+  return acc.docsByDates.size;
 }
 
 async function parsePage(
@@ -171,7 +155,9 @@ class DocumentAccumulator {
     const val = this.docsByDates.get(key);
 
     if (val) {
-      val.push(...words);
+      for(let i = 0; i < words.length; ++i) {
+        val.push(words[i]);
+      }
     } else {
       this.docsByDates.set(key, words);
     }

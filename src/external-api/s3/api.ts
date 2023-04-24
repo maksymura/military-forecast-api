@@ -21,3 +21,20 @@ export async function getObjectStream(fileKey: string) {
     })
     .createReadStream();
 }
+
+export async function getObjectPromise(fileKey: string) {
+  const s3 = new AWS.S3();
+  return s3
+    .getObject({
+      Bucket: process.env.BUCKET as string,
+      Key: fileKey,
+    }).promise()
+}
+
+export async function listObjects(prefix: string) {
+  const s3 = new AWS.S3();
+  return s3.listObjectsV2({
+    Bucket: process.env.BUCKET as string,
+    Prefix: prefix,
+  }).promise();
+}
