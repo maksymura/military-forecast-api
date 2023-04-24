@@ -1,4 +1,4 @@
-import { Region, regions } from "../../domain/regions";
+import { regions } from "../../domain/regions";
 import { WeatherDay, WeatherHour } from "../../domain/weather";
 import { weatherAPIUrl } from "./constants";
 import { WeatherAPIResponse } from "./types";
@@ -42,7 +42,7 @@ function createWeatherAPIDay({
     city_latitude: latitude,
     city_longitude: longitude,
     city_resolvedAddress: resolvedAddress,
-    city_address: address,
+    city_address: address.split(",")[0],
     city_timezone: timezone,
     city_tzoffset: tzoffset,
     day_datetime: dayData.datetime,
